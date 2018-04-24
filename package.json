@@ -1,0 +1,14 @@
+{
+  "name": "simple_practice_app",
+  "version": "1.0.0",
+  "description": "app for practice ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abdul Rasheed",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.3.1"
+  }
+}
