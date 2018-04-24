@@ -1,6 +1,10 @@
 'use strict';
 
 const models = require('../models/user');
+const AuthenticationUtility = require('../utility/authentication_utility');
+const QueryUtility = require('../utility/query');
+const TokenUtility = require('../utility/token_utility');
+
 
 module.exports = class User {
 
@@ -17,6 +21,18 @@ module.exports = class User {
                 cb(null, false);
                 return;
             }
+
+            QueryUtility.applyCreateQuery('users', query, null, null, null, true, cb);
+        }
+
+        func.generateToken = (addUser, cb) => {
+            if (addUser == false) {
+                cb(null, false);
+                return;
+            }
+
+            const token = TokenUtility.generateToken(addUser, "user");
+            cb(null, token);
         }
 
     }
