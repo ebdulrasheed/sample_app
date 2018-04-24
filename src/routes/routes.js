@@ -1,5 +1,6 @@
 'use strict';
 
-const basicController = require('../routes/basic_routes');
+const basicController = require('./basic_routes');
+const userController = require('./user_routes');
 
-module.exports = [].concat(basicController);
+module.exports = [].concat(basicController, userController);
