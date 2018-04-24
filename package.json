@@ -9,10 +9,12 @@
   "author": "Abdul Rasheed",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "hapi": "^16.6.2",
     "hapi-swagger": "^8.0.0",
     "inert": "^4.2.1",
     "joi": "^13.2.0",
+    "randomstring": "^1.1.5",
     "vision": "^4.1.1"
   }
 }
