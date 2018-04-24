@@ -9,6 +9,9 @@
   "author": "Abdul Rasheed",
   "license": "ISC",
   "dependencies": {
-    "hapi": "^17.3.1"
+    "hapi": "^16.6.2",
+    "hapi-swagger": "^8.0.0",
+    "inert": "^4.2.1",
+    "vision": "^4.1.1"
   }
 }
