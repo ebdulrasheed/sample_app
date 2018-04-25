@@ -8,13 +8,14 @@ module.exports = class TokenUtility {
             where: {
                 id: decoded.id,
                 is_deleted: 0,
-                auth_token: request.headers.authorization,
+                token_no: request.headers.authorization,
             }
         }
         return options;
     }
 
     static authenticateUser(decoded, request, callback) {
+      //  console.log('Decoded: ' + decoded.id);
         let options = TokenUtility.makeTokenQueryData(decoded, request);
         let modelName = "user";
         request.decoded = {

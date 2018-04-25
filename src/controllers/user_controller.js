@@ -136,7 +136,7 @@ module.exports = class User {
             }
         });
     }
-
+  
     static addUserToDB(userPayload)
     {
         const query = {
@@ -151,9 +151,23 @@ module.exports = class User {
         return query;
     }
 
-    static isUserExist(request, reply)
-    {
-    } 
+    static logout(request, reply) {
+        const query = {
+            token_no: "",
+        };
+        const options = {
+            where: {
+                id: request.decoded.id
+            }
+        }
+        QueryUtility.applyUpdateQuery('user', query, options, null, null, true, (err, data) => {
+            if (err) {
+                reply("Error Occured: " + err);
+            } else {
+                reply("Logout Successful");
+            }
+        });
+    }
 
     static updateUser(request, reply)
     {
