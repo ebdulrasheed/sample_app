@@ -78,6 +78,65 @@ module.exports = class User {
         });
     }
 
+    static loginWithEmail(request, reply) {
+        const funcs = {};
+
+        funcs.userExists = function (cb) {
+            User.getUser(request.payload.email, cb);
+        };
+
+        funcs.comparePassword = function (userExists, cb) {
+            if (userExists == null || userExists.password == null) {
+                cb(null, false);
+                return;
+            }
+            AuthenticationUtility.comparePassword(request.payload.password, userExists.password, cb);
+        };
+
+        funcs.generateToken = function (userExists, comparePassword, cb) {
+            if (userExists == null && comparePassword == false) {
+                cb(null, false);
+                return;
+            }
+            const token = TokenUtility.generateToken(userExists, "user");
+            cb(null, token);
+        };
+
+        funcs.saveToken = function (userExists, generateToken, cb) {
+            if (generateToken == false) {
+                cb(null, false);
+                return;
+            }
+            const query = {
+                token_no: generateToken,
+            };
+            const options = {
+                where: {
+                    id: userExists.id
+                }
+            }
+            QueryUtility.applyUpdateQuery('user', query, options, null, null, true, cb);
+        };
+
+        async.autoInject(funcs, function (err, results) {
+            // return and if else both is used intentionally, to make the code readable., 
+            // as it may be un-necessary but are not causing any extra processing
+
+            if (err) {
+                reply("Error Occured:" + err);
+            } else if (results.userExists == null) {
+                reply('User Already Exists');
+            } else if (results.comparePassword == false) {
+                reply('Invalid Email or Password');
+            } else if (results.generateToken != false && results.saveToken != false) {
+                //const tokenToSend = UsersController._profileResponse(results.userExists, results.generateToken);
+                reply('Successful Login');
+            } else {
+                reply("Internal Server Error while Login in").code(500);
+            }
+        });
+    }
+
     static addUserToDB(userPayload)
     {
         const query = {
