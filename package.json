@@ -9,12 +9,16 @@
   "author": "Abdul Rasheed",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "bcrypt": "^2.0.1",
     "hapi": "^16.6.2",
     "hapi-swagger": "^8.0.0",
     "inert": "^4.2.1",
     "joi": "^13.2.0",
+    "jsonwebtoken": "^8.2.1",
+    "mysql2": "^1.5.3",
     "randomstring": "^1.1.5",
+    "sequelize": "^4.37.6",
     "vision": "^4.1.1"
   }
 }

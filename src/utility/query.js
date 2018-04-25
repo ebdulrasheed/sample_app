@@ -1,6 +1,6 @@
 "use strict";
 const models = require("../models");
-const Op = models.Sequelize.Op;
+//const Op = models.Sequelize.Op;
 
 module.exports = class QueryUtility {
 
@@ -9,7 +9,7 @@ module.exports = class QueryUtility {
      * @param {*} modelName | Name of the table
      * @param {*} query  | Sequelize Query Object
      * @param {*} options | in case you want to some association etc, else null
-     * @param {*} reply | In case you want the automatic generic response after the insertion
+     * @param {*} repsly | In case you want the automatic generic response after the insertion
      * @param {*} payload | Payload object 
      * @param {*} applyAdjustment | if you want to apply adjust (will add the creation and updation time and is_deleted to zero)
      * @param {*} cb 
@@ -47,6 +47,7 @@ module.exports = class QueryUtility {
     static applyUpdateQuery(modelName, query, options, reply = null, payload = null, applyAdjustment = true, cb = null) {
         
         options.where.is_deleted = 0;
+        console.log("Show Model: " + modelName);
         models[modelName].update(query, options)
             .then(data => {
                 if (cb == null) {

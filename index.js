@@ -1,7 +1,7 @@
 'use strict';
 
 const hapi = require("hapi");
-const documentation = require('./src/configs/documentation');
+const documentation = require('./src/config/documentation');
 const routes = require('./src/routes/routes');
 const server = new hapi.Server();
 

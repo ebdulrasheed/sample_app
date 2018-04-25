@@ -31,6 +31,10 @@ module.exports = class TokenUtility {
         return jwt.sign({
                 id: input.id
             },
+            'UfWPugFMP6PFLDPzBxuW2d76Xu5CF68sQcEUXpv3', {
+                expiresIn: '40d'
+            },
+            { algorithm: 'RS256'}
             //config.secretKey, {
             //    expiresIn: config.tokenExpiresIn
             //}

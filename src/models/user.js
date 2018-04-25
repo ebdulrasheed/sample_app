@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     first_name: {
       type: DataTypes.STRING(45),
@@ -16,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.TEXT,
       allowNull: false
     },
     password: {
@@ -33,7 +34,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     address_book_id: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
       references: {
         model: 'address_book',
         key: 'id'
