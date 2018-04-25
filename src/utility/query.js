@@ -19,6 +19,9 @@ module.exports = class QueryUtility {
         query.is_deleted = 0;
         models[modelName].create(query,null)
             .then((data) => {
+
+                //zzb
+                console.log(data);
                 if (cb == null) {
                     reply('User Added');
                 } else {
@@ -48,6 +51,7 @@ module.exports = class QueryUtility {
         
         options.where.is_deleted = 0;
         console.log("Show Model: " + modelName);
+        console.log(query);
         models[modelName].update(query, options)
             .then(data => {
                 if (cb == null) {

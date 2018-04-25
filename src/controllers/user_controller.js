@@ -34,6 +34,9 @@ module.exports = class User {
         }
 
         func.generateToken = (addUser, cb) => {
+           
+            //console.log(addUser);
+            
             if (addUser == false) {
                 cb(null, false);
                 return;
@@ -50,7 +53,7 @@ module.exports = class User {
             }
 
             const query = {
-                token: generateToken,
+                token_no: generateToken,
             };
             const options = {
                 where: {
