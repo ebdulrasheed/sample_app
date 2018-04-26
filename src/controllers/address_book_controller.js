@@ -117,6 +117,21 @@ module.exports = class AddressBook {
             });
         }
 
+        static getAll(request, reply)
+        {
+            models['address'].findAll({
+                where: {
+                    user_id: request.decoded.id
+                }
+            })
+            .then( (data) => {
+                console.log('Records Fetched');
+                reply(data);
+            }, (err) => {
+                console.log('Error Thrown:' + err);
+            })
+        }
+
         static _addressAlreadyExist(request,cb){
             const query = {
                 where: {

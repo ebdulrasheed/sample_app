@@ -69,4 +69,19 @@ module.exports = [
             }
         }
     },
+    {
+        method: "GET",
+        path: "/addressbook/all",
+        config: {
+            description: "[App] Get all the Address's of the token user",
+            notes: " Returns all the addresses associated with a user id",
+            tags: ['api','addressbook'],
+            auth: {
+                strategy: 'jwt',
+            },
+            handler: addressBookController.getAll,
+            plugins: {},
+            validate: {},
+        }
+    },
 ]
