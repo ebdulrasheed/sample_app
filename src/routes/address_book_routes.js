@@ -50,4 +50,23 @@ module.exports = [
             }
         }
     },
+    {
+        method: "DELETE",
+        path: "/addressbook",
+        config: {
+            description: "[App] Delete Address book from the system",
+            notes: "Delete address book by providing its id",
+            tags: ['api','addressbook'],
+            auth: {
+                strategy: 'jwt',
+            },
+            handler: addressBookController.delete,
+            plugins: {},
+            validate: {
+                payload: {
+                    id: Joi.number().integer().min(1).required().example(1)
+                }
+            }
+        }
+    },
 ]

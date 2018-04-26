@@ -2,6 +2,7 @@
 
 const queryUtility = require('../utility/query');
 const models = require("../models");
+const Op = require('sequelize').Op;
 
 
 module.exports = class AddressBook {
@@ -40,62 +41,6 @@ module.exports = class AddressBook {
                             reply('Address already exists in database');
                         } 
                     });
-                    
-            // .spread((address, createdAddress) => {
-            //     console.log('Address: ' + address);
-            //     console.log('Created: ' + createdAddress);
-            // });
-              
-            // console.log(created)
-            // queryUtility.getCount(request, 'address', 'user_id')
-            // .then(count => {
-            //     if (count > 7) {
-            //         reply('Maximum 8 addresses can be stored');
-            //     } else {
-            //         AddressBook._addressAlreadyExist(false, flag => {
-            //             if(flag==true){
-            //                 this.reply('Address record already exists');
-            //                 return;
-            //             }
-            //             //if (count == 0) {
-            //                 //this.query.zf_is_default = 1;
-            //             //} else {
-            //             //    this.query.zf_is_default = 0;
-            //             //}
-            //             //if (this.request.payload.is_saved != null) {
-            //             //    this.query.zf_is_saved = this.request.payload.is_saved;
-            //            // }
-
-            //         const query = {
-            //             address_line_1: userPayload.first_name,
-            //             address_line_2: userPayload.last_name,
-            //             city: userPayload.email,
-            //             //user_id = request.decoded.id,
-            //         };
-
-            //         models.address.create(query, null)
-            //         .then((data) =>
-            //         {
-            //             //zzb
-            //             //console.log(data);
-            //             if (cb == null) {
-            //                 reply('Address Added');
-            //             } else {
-            //                 cb(null, data);
-            //             }
-            //         }, (err) => {
-            //             if (cb == null) {
-            //                 reply('Error in adding Address' + err);
-            //             } else {
-            //                 cb(err);
-            //             }
-            //         });
-
-
-            //           // queryUtility.applyCreateQuery('address', tempQuery, this.reply);
-            //         });                    
-            //     }
-            // });
         }
 
         static update(request, reply) {
@@ -135,17 +80,41 @@ module.exports = class AddressBook {
                         {
                             reply('Address does not exist');
                         }
-                    });
-                    
+                    });  
+        }
 
-            // this._addressAlreadyExist(true, flag => {
-            //     if(flag==true){
-            //         this.reply(responseUtility.makeResponseMessage(statusCodes.NOT_ACCEPTABLE, msgsConstants.DUPLICATE_RECORD, false));
-            //         return;
-            //     }  
-            //     this._update();
-            // });
-            
+        static delete(request, reply)
+        {
+            models['address'].count({
+                where: {
+                    id: {
+                        [Op.eq]: request.payload.id
+                    },
+                    user_id: {
+                        [Op.eq]: request.decoded.id
+                    },
+                }
+            }).then(count => {
+                if(count == 0)
+                {
+                    reply('No Record is available');
+                }
+                else if (count > 0) { // so that this.requested id is a valid address of that user and removing the default address will not effect the system
+                   {
+                    models['address'].destroy({
+                        where: {
+                            id: request.payload.id                                   
+                        }})
+                    .then((data) => {
+                        reply('Record Deleted');
+                    }, (err) => {
+                        reply('Record cannot be deleted' +  err);
+                    });
+                   }
+                } else {
+                    reply('Cannot Delete');
+                }
+            });
         }
 
         static _addressAlreadyExist(request,cb){
