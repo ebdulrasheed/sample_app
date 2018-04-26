@@ -1,3 +1,5 @@
 /node_modules/**
 .env
 /.env
+/package-lock.json
+/simple_app_db.mwb.bak

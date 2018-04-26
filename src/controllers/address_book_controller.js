@@ -98,6 +98,56 @@ module.exports = class AddressBook {
             // });
         }
 
+        static update(request, reply) {
+
+            models['address'].findOne({
+                where: {
+                    id: request.payload.id,
+                }})
+                .then(count =>
+                    {
+                        if (count)
+                        {
+                            const query = {
+                                address_line_1: request.payload.address_line_1,
+                                address_line_2: request.payload.address_line_2,
+                                city: request.payload.city
+                                }
+
+                            models['address'].update(query, {
+                                where: {
+                                    id: request.payload.id                                   
+                                }
+                            }).then((flag, data) => {
+                                if (flag)
+                                {
+                                    console.log('Log: Address Updated');
+                                    reply("Address Updated");
+                                }
+                                else
+                                {
+                                    console.log("Log: Address Updation Failed");
+                                    reply("Address updation failed");
+                                }
+                            });
+                        }
+                        else
+                        {
+                            reply('Address does not exist');
+                        }
+                    });
+                    
+
+            // this._addressAlreadyExist(true, flag => {
+            //     if(flag==true){
+            //         this.reply(responseUtility.makeResponseMessage(statusCodes.NOT_ACCEPTABLE, msgsConstants.DUPLICATE_RECORD, false));
+            //         return;
+            //     }  
+            //     this._update();
+            // });
+            
+        }
+
         static _addressAlreadyExist(request,cb){
             const query = {
                 where: {
