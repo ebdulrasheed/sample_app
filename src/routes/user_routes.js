@@ -112,43 +112,46 @@ module.exports = [
         }
     },
 
-        // Login User
-        {
-            method: "POST",
-            path: "/users/login",
-            config: {
-                description: "[APP] Login the users",
-                notes: `<b>Purpose: </b>User Loging to the application<br>
-                <b>Happy Scenerio Response: </b>System will reuturn the User <br>
-                <b>Other Responses: </b><br>Internal Server Error {
-                    "message": "An internal server error occurred",
-                    "statusCode": 500,
-                    "error": "Internal Server Error"
-                  }<br><br>
-                  Successfull message:  {
-                    "success": true,
-                    "statusCode": 200,
-                    "message": "User login successfull"
-                    "data" : user profile object,
-                  }
-                  <br>
-                <b>Good to know: </b><br>
-                `,
-                tags: ["api", "user"],
-                auth: false,
-                handler: UsersController.loginWithEmail,
-                plugins: {
-                    'hapi-swagger': {
-                        order: 5
-                    }
-                },
-                validate: {
-
+    // Login User
+    {
+        method: "POST",
+        path: "/users/login",
+        config: {
+            description: "[APP] Login the users",
+            notes: `<b>Purpose: </b>User Loging to the application<br>
+            <b>Happy Scenerio Response: </b>System will reuturn the User <br>
+            <b>Other Responses: </b><br>Internal Server Error {
+                "message": "An internal server error occurred",
+                "statusCode": 500,
+                "error": "Internal Server Error"
+                }<br><br>
+                Successfull message:  {
+                "success": true,
+                "statusCode": 200,
+                "message": "User login successfull"
+                "data" : user profile object,
+                }
+                <br>
+            <b>Good to know: </b><br>
+            `,
+            tags: ["api", "user"],
+            auth: false,
+            handler: UsersController.loginWithEmail,
+            plugins: {
+                'hapi-swagger': {
+                    order: 5
+                }
+            },
+            validate: {
+                payload: {
+                    email: constants.JOI.EMAIL.required(),
+                    password: constants.JOI.PASSWORD.required(),
                 }
             }
-        },
+        }
+    },
 
-        //logout deletes the auth token
+    //logout deletes the auth token
     {
         method: "GET",
         path: "/users/logout",

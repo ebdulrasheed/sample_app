@@ -176,7 +176,7 @@ module.exports = class User {
 
     static DeleteUser(request, reply)
     {
-        reply('Reached at Delte');
+        reply('Reached at Delete');
     }
 
     static getUser(email, cb)
