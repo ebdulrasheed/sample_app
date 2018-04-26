@@ -5,8 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      defaultValue: '10000',
-      primaryKey: true
+      primaryKey: true,
+      defaultValue: 0,
     },
     address_line_1: {
       type: DataTypes.STRING(45),

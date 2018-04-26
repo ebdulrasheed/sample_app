@@ -1,6 +1,7 @@
 "use strict";
 const models = require("../models");
 //const Op = models.Sequelize.Op;
+const Op = require('sequelize').Op;
 
 module.exports = class QueryUtility {
 
@@ -21,7 +22,7 @@ module.exports = class QueryUtility {
             .then((data) => {
 
                 //zzb
-                console.log(data);
+                //console.log(data);
                 if (cb == null) {
                     reply('User Added');
                 } else {
@@ -76,18 +77,18 @@ module.exports = class QueryUtility {
      * @param {*} cb | Cb to handle the response with the signature (err,count)=>{}
      */
     static getCount(value, modelName, colName, cb) {
-        models[modelName].count({
+        return models[modelName].count({
             where: {
                 [colName]: {
                     [Op.eq]: value
                 },
-                is_deleted: 0
-            }
-        }).then(data => {
-            cb(null, data);
-        }, err => {
-            cb(err);
-        });
+               // is_deleted: 0
+            }});
+        // }).then(data => {
+        //     cb(null, data);
+        // }, err => {
+        //     cb(err);
+        // });
     }
 }
 
