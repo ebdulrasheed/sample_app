@@ -5,8 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      defaultValue: '0',
+      primaryKey: true
     },
     first_name: {
       type: DataTypes.STRING(45),
@@ -17,11 +17,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     email: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(45),
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING(45),
+      type: DataTypes.TEXT,
       allowNull: false
     },
     token_no: {
@@ -31,15 +31,6 @@ module.exports = function(sequelize, DataTypes) {
     is_deleted: {
       type: "BINARY(1)",
       allowNull: false
-    },
-    address_book_id: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      defaultValue: null,
-      references: {
-        model: 'address_book',
-        key: 'id'
-      }
     }
   }, {
     tableName: 'user'

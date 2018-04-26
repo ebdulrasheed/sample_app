@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
+      defaultValue: '10000',
       primaryKey: true
     },
     address_line_1: {
@@ -21,9 +22,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     address_book_id: {
       type: DataTypes.INTEGER(11),
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
-        model: 'address_book',
+        model: 'user',
         key: 'id'
       }
     }
