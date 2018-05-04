@@ -171,7 +171,24 @@ module.exports = class User {
 
     static updateUser(request, reply)
     {
-        reply('Reached at update');
+        const query = {
+            first_name: request.payload.first_name,
+            last_name: request.payload.last_name,
+            email: request.payload.email,
+        };
+        const options = {
+            where: {
+                id: request.decoded.id
+            }
+        }
+
+        QueryUtility.applyUpdateQuery('user', query, options, null, null, true, (err, data) => {
+            if (err) {
+                reply(err);
+            } else {
+                reply('Profile Updated Sucessefully');
+            }
+        });
     }
 
     static DeleteUser(request, reply)

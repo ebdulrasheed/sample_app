@@ -47,15 +47,15 @@ module.exports = [
                 }
             },
             validate:
-            {
-                payload:
                 {
-                    first_name: constants.JOI.FIRST_NAME.required(),
-                    last_name: constants.JOI.LAST_NAME.required(),
-                    email: constants.JOI.EMAIL.required(),
-                    password: constants.JOI.PASSWORD.required(),
+                    payload:
+                        {
+                            first_name: constants.JOI.FIRST_NAME.required(),
+                            last_name: constants.JOI.LAST_NAME.required(),
+                            email: constants.JOI.EMAIL.required(),
+                            password: constants.JOI.PASSWORD.required(),
+                        }
                 }
-            }
         }
     },
     //Get Profile
@@ -100,15 +100,15 @@ module.exports = [
                 }
             },
             validate:
-            {
-                params:
                 {
-                    first_name: constants.JOI.FIRST_NAME.required(),
-                    last_name: constants.JOI.LAST_NAME.required(),
-                    email: constants.JOI.EMAIL.required(),
-                    password: constants.JOI.PASSWORD.required(),
+                    params:
+                        {
+                            first_name: constants.JOI.FIRST_NAME.required(),
+                            last_name: constants.JOI.LAST_NAME.required(),
+                            email: constants.JOI.EMAIL.required(),
+                            password: constants.JOI.PASSWORD.required(),
+                        }
                 }
-            }
         }
     },
 
@@ -180,10 +180,49 @@ module.exports = [
             handler: UsersController.logout,
             plugins: {
                 'hapi-swagger': {
-                    order: 7
+                    order: 6
                 }
             },
             validate: {}
+        }
+    },
+    //Updates the user profile
+    {
+        method: "PUT",
+        path: "/users/update",
+        config: {
+            description: "[APP] Updates the user",
+            notes: `<b>Purpose: </b>Updatess the user<br>
+                <b>Happy Scenerio Response: </b>Makes the profile updated, and a success response<br>
+                <b>Other Responses: </b><br>Internal Server Error {
+                    "message": "An internal server error occurred",
+                    "statusCode": 500,
+                    "error": "Internal Server Error"
+                  }<br><br>
+                  Successfull message:  {
+                    "success": true,
+                    "statusCode": 200,
+                    "message": "User profile updation successfull"
+                  }
+                `,
+            tags: ['api', 'user'],
+            auth: {
+                strategy: 'jwt',
+                //scope: ['USER'],
+            },
+            handler: UsersController.updateUser,
+            plugins: {
+                'hapi-swagger': {
+                    order: 7
+                }
+            },
+            validate: {
+                payload: {
+                    first_name: constants.JOI.FIRST_NAME.required(),
+                    last_name: constants.JOI.LAST_NAME.required(),
+                    email: constants.JOI.EMAIL.required(),
+                }
+            }
         }
     },
 ]
