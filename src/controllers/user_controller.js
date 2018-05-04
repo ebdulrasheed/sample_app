@@ -35,7 +35,7 @@ module.exports = class User {
 
         func.generateToken = (addUser, cb) => {
            
-            //console.log(addUser);
+            console.log(addUser);
             
             if (addUser == false) {
                 cb(null, false);
